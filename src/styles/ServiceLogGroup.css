@@ -1,0 +1,14 @@
+.service-log-group {
+  border-radius: 8px;
+  background-color: #fff;
+  margin-top: 1em;
+  padding: 1em;
+}
+
+.service-log-group:first-of-type {
+  margin-top: 0;
+}
+
+.service-log-group-header {
+  overflow: hidden;
+}

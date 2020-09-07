@@ -1,0 +1,29 @@
+.service-log-request-payloads {
+  margin-top: 1em;
+  overflow: hidden;
+}
+
+.service-log-request-payloads pre {
+  font-size: 85%;
+  margin: 0;
+}
+
+.service-log-request-payload {
+  float: left;
+  margin-right: 0.5em;
+  width: calc(50% - 0.5em);
+}
+
+.service-log-request-payload:last-of-type {
+  margin: 0;
+  margin-left: 0.5em;
+}
+
+.service-log-request-payloadCode {
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.service-log-request-header {
+  padding: 1em 0;
+}

@@ -1,0 +1,40 @@
+.service-log,
+.service-log * {
+  box-sizing: border-box;
+}
+
+.service-log em {
+  color: #0e5a8a;
+  font-style: normal;
+  font-weight: 600;
+}
+
+.service-log p {
+  line-height: 1.5;
+  margin: 0;
+}
+
+.service-log hr {
+  border: 0;
+  background: #f5f8fa;
+  height: 1px;
+  margin: 0;
+  margin-top: 1em;
+}
+
+.service-log {
+  padding: 1em;
+}
+
+/* .service-log-nav {
+  border: 1px solid #f1f1f1;
+  border-radius: 8px;
+  display: inline-block;
+  overflow: hidden;
+  transition: all ease-out 0.3s;
+  width: auto;
+}
+
+.service-log-nav:hover {
+  border-color: #c5c5c5;
+} */

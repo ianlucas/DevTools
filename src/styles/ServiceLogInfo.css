@@ -1,0 +1,19 @@
+.service-log-info {
+  border: 1px solid #f5f8fa;
+  border-radius: 8px;
+  padding: 0.5em 1em;
+  width: 100%;
+}
+
+.service-log-info td {
+  white-space: nowrap;
+  width: 1px;
+}
+
+.service-log-info td:not(:first-of-type) {
+  padding-left: 0.75em;
+}
+
+.service-log-info td:last-of-type {
+  width: auto;
+}

@@ -1,0 +1,5 @@
+.service-log-request-list {
+  overflow-y: auto;
+  margin-top: 0.5em;
+  max-height: 200px;
+}

@@ -1,0 +1,36 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Nunito Sans', sans-serif;
+}
+
+body {
+  background-color: #ced9e0;
+  margin: 0;
+  padding: 0;
+}
+
+button:focus {
+  outline: none;
+}
+
+pre,
+code {
+  font-family: 'Source Code Pro', monospace;
+}
+
+.gutter.gutter-vertical {
+  cursor: ns-resize !important;
+  position: relative;
+}
+.gutter.gutter-vertical:after {
+  content: '';
+  display: block;
+  height: 8px;
+  width: 100%;
+  position: absolute;
+  top: -3px;
+  z-index: 10;
+}

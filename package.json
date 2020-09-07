@@ -1,0 +1,33 @@
+{
+  "name": "devtools",
+  "version": "1.0.0",
+  "description": "",
+  "main": "bootstrap.js",
+  "scripts": {
+    "dev": "parcel src/index.html --public-url ./",
+    "start": "electron ."
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "electron": "^8.5.0",
+    "electron-devtools-installer": "^3.1.1",
+    "parcel": "^2.0.0-beta.1"
+  },
+  "dependencies": {
+    "@blueprintjs/core": "^3.31.0",
+    "classnames": "^2.2.6",
+    "js-beautify": "^1.13.0",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "react-monaco-editor": "^0.40.0",
+    "react-split": "^2.0.9",
+    "react-syntax-highlighter": "^13.5.1",
+    "uuid": "^8.3.0"
+  },
+  "targets": {
+    "default": {
+      "context": "electron-main"
+    }
+  }
+}

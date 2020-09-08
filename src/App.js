@@ -5,7 +5,7 @@ import './styles/App.css'
 
 export default function App () {
   function handleTabs (tabs) {
-    tabs.createTab('Log Servicos', true)
+    tabs.createTab('Service Log App', true)
   }
 
   return (

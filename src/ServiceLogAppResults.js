@@ -5,7 +5,7 @@ import './styles/ServiceLogAppResults.css'
 
 export default function ServiceLogAppResults () {
   return (
-    <div class='service-log-app-results'>
+    <div className='service-log-app-results'>
       <ServiceLog rows={sampleRows} />
     </div>
   )

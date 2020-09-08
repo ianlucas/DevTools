@@ -1,3 +1,8 @@
 .service-log-app-header {
   overflow: auto;
 }
+
+.service-log-app-header .CodeMirror {
+  height: calc(100% - 50px);
+  padding: 1em;
+}

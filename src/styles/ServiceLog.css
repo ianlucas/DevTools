@@ -23,18 +23,5 @@
 }
 
 .service-log {
-  padding: 1em;
+  padding: 0.5em;
 }
-
-/* .service-log-nav {
-  border: 1px solid #f1f1f1;
-  border-radius: 8px;
-  display: inline-block;
-  overflow: hidden;
-  transition: all ease-out 0.3s;
-  width: auto;
-}
-
-.service-log-nav:hover {
-  border-color: #c5c5c5;
-} */

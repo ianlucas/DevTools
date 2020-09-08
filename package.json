@@ -17,10 +17,10 @@
   "dependencies": {
     "@blueprintjs/core": "^3.31.0",
     "classnames": "^2.2.6",
+    "codemirror": "^5.57.0",
     "js-beautify": "^1.13.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "react-monaco-editor": "^0.40.0",
     "react-split": "^2.0.9",
     "react-syntax-highlighter": "^13.5.1",
     "uuid": "^8.3.0"

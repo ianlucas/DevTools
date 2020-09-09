@@ -1,19 +1,29 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Split from './Split'
 import ServiceLogAppHeader from './ServiceLogAppHeader'
-import ServiceLogAppResults from './ServiceLogAppResults'
+import ServiceLogAppResult from './ServiceLogAppResult'
+import './styles/ServiceLogApp.css'
 
 export default function ServiceLogApp (props) {
+  const [result, setResult] = useState({
+    type: 'log',
+    rows: []
+  })
+
   return (
     <Split
-      className='Split'
-      sizes={[25, 75]}
+      className='service-log-app split'
+      sizes={[20, 80]}
       direction='vertical'
-      minSize={100}
+      minSize={256}
       gutterSize={1}
     >
-      <ServiceLogAppHeader />
-      <ServiceLogAppResults />
+      <ServiceLogAppHeader
+        onUpdateResult={setResult}
+      />
+      <ServiceLogAppResult
+        {...result}
+      />
     </Split>
   )
 }

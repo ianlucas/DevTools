@@ -1,24 +1,14 @@
 import React, { useState } from 'react'
 import { Button, ControlGroup, Navbar, NavbarGroup, Icon } from '@blueprintjs/core'
-import useEventState from './hooks/useEventState'
 import CodeMirrorEditor from './CodeMirrorEditor'
-import ServiceLogAppAPI from './custom/ServiceLogAppAPI'
 import './styles/ServiceLogAppHeader.css'
 
 export default function ServiceLogAppHeader (props) {
   const [queryText, setQueryText] = useState('')
-  const [isDisabled, setIsDisabled] = useState(false)
   const [environment, setEnvironment] = useState('')
 
   async function handleRunClick () {
-    setIsDisabled(true)
-    props.onUpdateResult(
-      await ServiceLogAppAPI.fetch(
-        environment,
-        await ServiceLogAppAPI.beforeFetch(queryText)
-      )
-    )
-    setIsDisabled(false)
+    props.onUpdateResult(environment, queryText)
   }
 
   return (
@@ -36,7 +26,7 @@ export default function ServiceLogAppHeader (props) {
               </select>
             </div>
             <Button
-              disabled={isDisabled}
+              disabled={props.disabled}
               icon={<Icon icon='play' intent='success' />}
               onClick={handleRunClick}
             >
@@ -47,7 +37,7 @@ export default function ServiceLogAppHeader (props) {
         </NavbarGroup>
       </Navbar>
       <CodeMirrorEditor
-        disabled={isDisabled}
+        disabled={props.disabled}
         onChange={setQueryText}
       />
     </div>

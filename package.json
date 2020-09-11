@@ -20,6 +20,8 @@
     "@blueprintjs/core": "^3.31.0",
     "classnames": "^2.2.6",
     "codemirror": "^5.57.0",
+    "dayjs": "^1.8.35",
+    "faker": "^5.1.0",
     "js-beautify": "^1.13.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",

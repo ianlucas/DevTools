@@ -16,8 +16,6 @@ export default function ServiceLogApp (props) {
     rows: []
   })
 
-  console.log(isDisabled)
-
   function fetch (newCurrent) {
     const context = newCurrent || current
     return ServiceLogAppAPI.fetch(

@@ -30,7 +30,7 @@ export default function ServiceLogAppHeader (props) {
               icon={<Icon icon='play' intent='success' />}
               onClick={handleRunClick}
             >
-              Run
+              {props.disabled ? 'Fetching...' : 'Run'}
             </Button>
           </ControlGroup>
 

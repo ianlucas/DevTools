@@ -4,6 +4,10 @@
   overflow-y: scroll;
 }
 
+.service-log-app-result.no-scroll {
+  overflow-y: hidden;
+}
+
 .service-log-app-result-footer {
   margin-top: 0.25em;
   margin-bottom: 1em;

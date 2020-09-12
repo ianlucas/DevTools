@@ -971,6 +971,17 @@
     classnames "^2.2"
     tslib "~1.13.0"
 
+"@blueprintjs/table@^3.8.13":
+  version "3.8.13"
+  resolved "https://registry.yarnpkg.com/@blueprintjs/table/-/table-3.8.13.tgz#034b2e21669ed168508245354a2238fe071807a5"
+  integrity sha512-5IAlTNOp7Hxe8g77rHNh+C/sT5JbPeQcJxk2Xwx66lDIvYIYQb6NjWQoaqdrYyzre/k1b2+0SJC6xWDucP4f4Q==
+  dependencies:
+    "@blueprintjs/core" "^3.31.0"
+    classnames "^2.2"
+    prop-types "^15.7.2"
+    react-lifecycles-compat "^3.0.4"
+    tslib "~1.13.0"
+
 "@electron/get@^1.0.1":
   version "1.12.2"
   resolved "https://registry.yarnpkg.com/@electron/get/-/get-1.12.2.tgz#6442066afb99be08cefb9a281e4b4692b33764f3"
@@ -5701,7 +5712,7 @@ progress@^2.0.3:
   resolved "https://registry.yarnpkg.com/progress/-/progress-2.0.3.tgz#7e8cf8d8f5b8f239c1bc68beb4eb78567d572ef8"
   integrity sha512-7PiHtLll5LdnKIMw100I+8xJXR5gW2QwWYkT6iJva0bXitZKa/XMrSbdmg3r2Xnaidz9Qumd0VPaMrZlF9V9sA==
 
-prop-types@^15.5.7, prop-types@^15.6.1, prop-types@^15.6.2:
+prop-types@^15.5.7, prop-types@^15.6.1, prop-types@^15.6.2, prop-types@^15.7.2:
   version "15.7.2"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.7.2.tgz#52c41e75b8c87e72b9d9360e0206b99dcbffa6c5"
   integrity sha512-8QQikdH7//R2vurIJSutZ1smHYTcLpRWEOlHnzcWHmBYrOGUysKwSsrC89BCiFj3CbrfJ/nXFdJepOVrY1GCHQ==

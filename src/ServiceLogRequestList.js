@@ -2,6 +2,12 @@ import React from 'react'
 import { Button, Icon } from '@blueprintjs/core'
 import './styles/ServiceLogRequestList.css'
 
+function getIcon (record) {
+  const name = record.icon || 'cube#primary'
+  const [icon, intent] = name.split('#')
+  return { icon, intent }
+}
+
 export default function ServiceLogRequestList (props) {
   const activeRecord = (props.activeRecord || {})
 
@@ -14,7 +20,7 @@ export default function ServiceLogRequestList (props) {
           active={activeRecord.id === record.id}
           minimal
         >
-          <p><Icon icon='cube' /> <em>{record.name}</em></p>
+          <p><Icon {...getIcon(record)} /> <em>{record.name}</em></p>
           <p><Icon icon='time' /> <span>{record.requestTime.timeText}</span></p>
         </Button>
       ))}

@@ -97,7 +97,6 @@ export default function Tabs (props) {
       other.id !== tab.id
     ))
     if (shouldSetActive) {
-      console.log(index)
       setActiveTab(current[index] || current[0])
     }
     setTabs(current)

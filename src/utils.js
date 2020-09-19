@@ -1,6 +1,8 @@
-import beautify from 'js-beautify'
-import sortBy from 'lodash.sortby'
 import FileSaver from 'file-saver'
+import beautifyLibrary from 'js-beautify'
+import escapeLibrary from 'js-string-escape'
+import printfLibrary from 'printf'
+import sortBy from 'lodash.sortby'
 
 export function createGroupsFromRows (rows) {
   const result = []
@@ -27,14 +29,14 @@ export function createGroupsFromRows (rows) {
   return result
 }
 
-export function beautifier (type, text) {
+export function beautify (type, text) {
   const options = {
     indent_size: 2
   }
   if (type === 'json') {
-    return beautify(text, options)
+    return beautifyLibrary(text, options)
   } else if (type === 'xml') {
-    return beautify.html_beautify(text, options)
+    return beautifyLibrary.html_beautify(text, options)
   }
 }
 
@@ -87,3 +89,11 @@ export function writeFile (name, content, type = 'application/json;charset=utf-8
   const blob = new window.Blob([content], { type })
   FileSaver.saveAs(blob, name)
 }
+
+export function convertNewlinesToBr (text) {
+  return text.replace(/\n/g, '<br>')
+}
+
+export const escape = escapeLibrary
+
+export const printf = printfLibrary

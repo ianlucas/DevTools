@@ -1,7 +1,12 @@
 import React from 'react'
+
 import './styles/ServiceLogInfobox.css'
 
 export default function ServiceLogInfobox (props) {
+  if (!props.info) {
+    return null
+  }
+
   return (
     <table className='service-log-infobox'>
       <tbody>

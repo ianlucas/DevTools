@@ -1,5 +1,7 @@
 import React from 'react'
+
 import { Button, Icon } from '@blueprintjs/core'
+
 import './styles/ServiceLogRequestList.css'
 
 function getIcon (record) {

@@ -1,5 +1,7 @@
 import React from 'react'
+
 import Split from 'react-split'
+
 import './styles/Split.css'
 
 export default function SplitWrapper (props) {

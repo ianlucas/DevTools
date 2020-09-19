@@ -1,6 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react'
+
 import { v4 as uuid } from 'uuid'
 import classNames from 'classnames'
+
 import './styles/Tabs.css'
 
 const WHEEL_SENSITIVITY = 0.5

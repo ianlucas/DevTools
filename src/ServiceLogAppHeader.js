@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
+
 import { Button, ControlGroup, Navbar, NavbarGroup, Icon } from '@blueprintjs/core'
 import CodeMirrorEditor from './CodeMirrorEditor'
+
 import './styles/ServiceLogAppHeader.css'
 
 export default function ServiceLogAppHeader (props) {

@@ -1,4 +1,5 @@
 import React from 'react'
+
 import './styles/ServiceLogInfo.css'
 
 export default function ServiceLogInfo (props) {

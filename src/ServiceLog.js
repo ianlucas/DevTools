@@ -1,6 +1,9 @@
 import React from 'react'
+
 import ServiceLogGroup from './ServiceLogGroup'
+
 import { createGroupsFromRows } from './utils'
+
 import './styles/ServiceLog.css'
 
 export default function ServiceLog (props) {

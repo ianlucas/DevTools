@@ -1,20 +1,24 @@
 import React, { useRef } from 'react'
+
 import { Button } from '@blueprintjs/core'
 import { Table, Column, Cell } from '@blueprintjs/table'
 import ServiceLog from './ServiceLog'
+
+import classNames from 'classnames'
+
 import './styles/ServiceLogAppResult.css'
 
 export default function ServiceLogAppResults (props) {
   const table = useRef(null)
   const rowsCount = props.rows.length
   const columns = Object.keys(props.rows[0] || {})
-  const className = [
-    'service-log-app-result',
-    props.type === 'table' ? 'no-scroll' : ''
-  ]
+  const className = classNames({
+    'service-log-app-result': true,
+    'no-scroll': props.type === 'table'
+  })
 
   return (
-    <div className={className.join(' ')}>
+    <div className={className}>
       {props.type === 'log' && <ServiceLog rows={props.rows} />}
       {props.type === 'table' && (
         <Table

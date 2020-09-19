@@ -5700,6 +5700,11 @@ prepend-http@^2.0.0:
   resolved "https://registry.yarnpkg.com/prepend-http/-/prepend-http-2.0.0.tgz#e92434bfa5ea8c19f41cdfd401d741a3c819d897"
   integrity sha1-6SQ0v6XqjBn0HN/UAddBo8gZ2Jc=
 
+printf@^0.6.0:
+  version "0.6.0"
+  resolved "https://registry.yarnpkg.com/printf/-/printf-0.6.0.tgz#a04797a8844ec8d37e41288ddf367288f7dbfff0"
+  integrity sha512-Fddn0Zb7jO5BZDiIZgjHN6eGBVj/0tIWJm4u5ZTV/WtIA7czrEwEYnqzm6QfirB+sWVRpHC/9ADE1LRbiq2AHg==
+
 prismjs@^1.21.0, prismjs@~1.21.0:
   version "1.21.0"
   resolved "https://registry.yarnpkg.com/prismjs/-/prismjs-1.21.0.tgz#36c086ec36b45319ec4218ee164c110f9fc015a3"

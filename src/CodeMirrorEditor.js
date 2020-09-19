@@ -31,7 +31,6 @@ export default function CodeMirrorEditor (props) {
 
   if (editor) {
     editor.setOption('readOnly', props.disabled || false)
-    console.log(props.disabled)
   }
 
   return (

@@ -3,6 +3,8 @@ import React, { useState } from 'react'
 import { Button, ControlGroup, Navbar, NavbarGroup, Icon } from '@blueprintjs/core'
 import CodeMirrorEditor from './CodeMirrorEditor'
 
+import source from './custom/ServiceLogApp'
+
 import './styles/ServiceLogAppHeader.css'
 
 export default function ServiceLogAppHeader (props) {
@@ -22,9 +24,14 @@ export default function ServiceLogAppHeader (props) {
           <ControlGroup>
             <div className='bp3-select'>
               <select onChange={setEnvironment}>
-                <option value='dev'>Dev</option>
-                <option value='hml'>Hml</option>
-                <option value='prd'>Prd</option>
+                {source.environments.map((environment) => (
+                  <option
+                    key={environment.id}
+                    value={environment.id}
+                  >
+                    {environment.name}
+                  </option>
+                ))}
               </select>
             </div>
             <Button

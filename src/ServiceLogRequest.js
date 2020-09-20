@@ -8,7 +8,7 @@ import ServiceLogRequestCallout from './ServiceLogRequestCallout'
 import { magula } from 'react-syntax-highlighter/dist/esm/styles/hljs'
 import { beautify } from './utils'
 
-import scritps from './scripts'
+import scritps from './locale'
 
 import './styles/ServiceLogRequest.css'
 

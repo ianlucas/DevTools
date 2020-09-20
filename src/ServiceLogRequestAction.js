@@ -2,9 +2,9 @@ import React from 'react'
 
 import { Button, ButtonGroup } from '@blueprintjs/core'
 import { copyText, copyHtmlElement, convertNewlinesToBr, escape, printf, writeFile } from './utils'
-import scripts from './scripts'
+import locale from './locale'
 
-const { termInterface, termEndpoint, termDate, termDownload, termHeader, termMock, termRequest, termResponse, termMessage, termEmail, requestMessage, requestEmail, requestHeader } = scripts
+const { termInterface, termEndpoint, termDate, termDownload, termHeader, termMock, termRequest, termResponse, termMessage, termEmail, requestMessage, requestEmail, requestHeader } = locale
 
 export default function ServiceLogRequestAction ({ request, response, props }) {
   const headerPasta = printf(

@@ -34,3 +34,57 @@ code {
   top: -3px;
   z-index: 10;
 }
+
+body:not(.native-scrollbars) *::-webkit-scrollbar {
+  -webkit-appearance: none;
+  outline: none;
+}
+
+body:not(.native-scrollbars) *::-webkit-scrollbar:vertical {
+  width: 16px;
+}
+
+body:not(.native-scrollbars) *::-webkit-scrollbar:horizontal {
+  height: 16px;
+}
+
+body:not(.native-scrollbars) *::-webkit-scrollbar-button,body:not(.native-scrollbars) *::-webkit-scrollbar-corner {
+  display: none;
+}
+
+body:not(.native-scrollbars) *::-webkit-scrollbar-track {
+  background: #fff;
+  border: 1px solid #fff;
+}
+
+body:not(.native-scrollbars) *::-webkit-scrollbar-track:hover {
+  background: #f9f9f9;
+  border-color: #e1e1e1;
+}
+
+body:not(.native-scrollbars) *::-webkit-scrollbar-track:vertical {
+  border-width: 0 0 0 1px;
+}
+
+body:not(.native-scrollbars) *::-webkit-scrollbar-track:vertical:corner-present {
+  border-width: 0 0 1px 1px;
+  border-radius: 0 0 0 2px;
+}
+
+body:not(.native-scrollbars) *::-webkit-scrollbar-track:horizontal {
+  border-width: 1px 1px 0 1px;
+  border-radius: 2px 2px 0 0;
+}
+
+body:not(.native-scrollbars) *::-webkit-scrollbar-thumb {
+  min-height: 2rem;
+  background: #ccc;
+  background-clip: padding-box;
+  border: 5px solid transparent;
+  border-radius: 10px;
+}
+
+body:not(.native-scrollbars) *::-webkit-scrollbar-thumb:hover,body:not(.native-scrollbars) *::-webkit-scrollbar-thumb:active {
+  background-color: #999;
+  border-width: 4px
+}

@@ -4,7 +4,8 @@ import Split from './Split'
 import ServiceLogAppHeader from './ServiceLogAppHeader'
 import ServiceLogAppResult from './ServiceLogAppResult'
 
-import ServiceLogAppAPI from './custom/ServiceLogAppAPI'
+import source from './custom/ServiceLogApp'
+import ServiceAnalysis from './lib/ServiceAnalysis'
 
 import './styles/ServiceLogApp.css'
 
@@ -21,9 +22,10 @@ export default function ServiceLogApp (props) {
 
   function fetch (newCurrent) {
     const context = newCurrent || current
-    return ServiceLogAppAPI.fetch(
+    return source.fetch(
       context.environment,
-      ServiceLogAppAPI.beforeFetch(context.queryText, page)
+      source.beforeFetch(context.queryText, page),
+      ServiceAnalysis
     )
   }
 

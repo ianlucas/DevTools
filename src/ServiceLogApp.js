@@ -54,6 +54,7 @@ export default function ServiceLogApp (props) {
   return (
     <Split
       className='service-log-app split'
+      style={props.style}
       sizes={[20, 80]}
       direction='vertical'
       minSize={100}

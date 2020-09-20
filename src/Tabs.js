@@ -29,7 +29,10 @@ export default function Tabs (props) {
   }
 
   function handleDoubleClick (e) {
-    if (e.target.className !== 'Tabs') {
+    if (
+      e.target.className !== 'Tabs' ||
+        props.disableCreate
+    ) {
       return
     }
     createTab(null, true)
@@ -113,6 +116,15 @@ export default function Tabs (props) {
       createTab
     })
   }, [])
+
+  useEffect(() => {
+    props.onChange(tabs)
+  }, [tabs])
+
+  useEffect(() => {
+    props.onActiveChange(activeTab)
+  }, [activeTab])
+
 
   return (
     <nav

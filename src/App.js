@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 
+import QuickOpenTab from './QuickOpenTab'
 import Tabs from './Tabs'
 import ServiceLogApp from './ServiceLogApp'
 
@@ -58,6 +59,7 @@ export default function App () {
           />
         ))}
       </div>
+      <QuickOpenTab />
     </div>
   )
 }

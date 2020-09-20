@@ -1,7 +1,6 @@
 .service-log-app-result {
   background: linear-gradient(180deg, rgba(167,182,194,1) 0%, rgba(191,204,214,1) 100%);
   overflow: auto;
-  overflow-y: scroll;
 }
 
 .service-log-app-result.no-scroll {

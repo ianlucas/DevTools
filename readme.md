@@ -16,7 +16,7 @@ A framework to quickly set up a development tools environment.
 ### Service Log App
 
 * To setup this app, you need to create a file at `./custom/ServiceLogApp.js` exporting an object with two functions.
-  * `beforeFetch` function should return the final query that will sent to the `fetch` function, it has two parameteres:
+  * `beforeFetch` function should return the final query that will be sent to the `fetch` function, it has two parameteres:
     * `query` (String) - the query text written in the screen editor;
     * `page` (Number) - the current page to help you paginate the results;
     * returns any type.

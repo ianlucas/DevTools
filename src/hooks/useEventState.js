@@ -7,5 +7,5 @@ export default function useEventState (initialState) {
     setValue(e.target.value)
   }
 
-  return [value, handleEvent]
+  return [value, handleEvent, setValue]
 }

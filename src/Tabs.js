@@ -2,9 +2,11 @@ import React, { useState, useRef, useEffect } from 'react'
 
 import { v4 as uuid } from 'uuid'
 import classNames from 'classnames'
+import locale from './locale'
 
 import './styles/Tabs.css'
 
+const { termNewTab } = locale
 const WHEEL_SENSITIVITY = 0.5
 
 export default function Tabs (props) {
@@ -19,7 +21,7 @@ export default function Tabs (props) {
     const id = uuid()
     const tab = {
       id,
-      title: title || 'New Tab'
+      title: title || termNewTab
     }
     setTabs([...tabs, tab])
     if (shouldBeActive) {
@@ -113,7 +115,8 @@ export default function Tabs (props) {
 
   useEffect(() => {
     props.onInit({
-      createTab
+      createTab,
+      setTabs
     })
   }, [])
 
@@ -124,7 +127,6 @@ export default function Tabs (props) {
   useEffect(() => {
     props.onActiveChange(activeTab)
   }, [activeTab])
-
 
   return (
     <nav

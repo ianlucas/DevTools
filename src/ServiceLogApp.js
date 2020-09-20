@@ -62,6 +62,8 @@ export default function ServiceLogApp (props) {
     >
       <ServiceLogAppHeader
         onUpdateResult={handleUpdateResult}
+        onChangeTitle={props.onChangeTitle}
+        tabTitle={props.tabTitle}
         disabled={isDisabled}
       />
       <ServiceLogAppResult

@@ -1,6 +1,11 @@
 import customLocale from './custom/locale'
 
 const locale = {
+  termNewTab: 'New Tab',
+  termChangeTitle: 'Change tab title',
+  termServiceLogApp: 'Service Log App',
+  termFetching: 'Fetching...',
+  termRun: 'Run',
   termInterface: 'Inteface',
   termEndpoint: 'Endpoint',
   termDate: 'Date',
@@ -11,6 +16,8 @@ const locale = {
   termEmail: 'E-mail',
   termMock: 'Mock',
   termDownload: 'Download',
+  termCancel: 'Cancel',
+  termOk: 'Ok',
   requestHeader: '%s: %s\n%s: %s\n%s: %s %s-%s',
   requestMessage: '%s\n\n[%s]\n\n%s\n\n[%s]\n\n%s',
   requestEmail: '<p>%s</p><p><table style="border-collapse: collapse; white-space: pre; border: 1px solid #000;"><tr><td style="vertical-align: top; border: 1px solid #000; padding: 4px;">%s</td><td style="vertical-align: top; border: 1px solid #000; padding: 4px;">%s</td></tr></table></p>'

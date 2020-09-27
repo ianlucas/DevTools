@@ -1,34 +1,32 @@
-import React, { useState, useRef, useEffect } from 'react'
+import React, { useState, useRef } from 'react'
 
-import { v4 as uuid } from 'uuid'
 import classNames from 'classnames'
-import locale from './locale'
 
 import './styles/Tabs.css'
 
-const { termNewTab } = locale
 const WHEEL_SENSITIVITY = 0.5
 
+// onChange
+// onDoubleClick
+// onClick
 export default function Tabs (props) {
   const refTabs = useRef(null)
-  const [tabs, setTabs] = useState([])
   const [hoverTab, setHoverTab] = useState(null)
   const [draggedTab, setDraggedTab] = useState(null)
-  const [activeTab, setActiveTab] = useState(null)
   const [isDragging, setIsDragging] = useState(false)
 
-  function createTab (title, shouldBeActive = false) {
-    const id = uuid()
-    const tab = {
-      id,
-      title: title || termNewTab
-    }
-    setTabs([...tabs, tab])
-    if (shouldBeActive) {
-      setActiveTab(tab)
-    }
-    return id
-  }
+  // function createTab (title, shouldBeActive = true) {
+  //   const id = uuid()
+  //   const tab = {
+  //     id,
+  //     title: title || termNewTab
+  //   }
+  //   setTabs((current) => [...current, tab])
+  //   if (shouldBeActive) {
+  //     setActiveTab(tab)
+  //   }
+  //   return id
+  // }
 
   function handleDoubleClick (e) {
     if (
@@ -37,12 +35,14 @@ export default function Tabs (props) {
     ) {
       return
     }
-    createTab(null, true)
+    if (props.onDoubleClick) {
+      props.onDoubleClick()
+    }
   }
 
   function handleMousedown (e, tab) {
     if (e.button === 0) {
-      return setActiveTab(tab)
+      return props.onClick(tab)
     } else if (e.button === 1) {
       return removeTab(tab)
     }
@@ -72,13 +72,13 @@ export default function Tabs (props) {
   }
 
   function handleDrop () {
-    const fromIndex = tabs.findIndex((other) => (
+    const fromIndex = props.list.findIndex((other) => (
       other.id === draggedTab?.id
     ))
-    const toIndex = tabs.findIndex((other) => (
+    const toIndex = props.list.findIndex((other) => (
       other.id === hoverTab?.id
     ))
-    const current = tabs.filter((tab) => (
+    const current = props.list.filter((tab) => (
       tab.id !== draggedTab.id
     ))
     if (hoverTab === null) {
@@ -93,40 +93,25 @@ export default function Tabs (props) {
         draggedTab
       )
     }
-    setTabs(current)
+    props.onChange(current)
   }
 
   function removeTab (tab, shouldSetActive = true) {
-    const index = tabs.findIndex((other) => (
+    const index = props.list.findIndex((other) => (
       other.id === tab.id
     ))
-    const current = tabs.filter((other) => (
+    const current = props.list.filter((other) => (
       other.id !== tab.id
     ))
     if (shouldSetActive) {
-      setActiveTab(current[index] || current[0])
+      props.onClick(current[index] || current[0])
     }
-    setTabs(current)
+    props.onChange(current)
   }
 
   function handleWheel (e) {
     refTabs.current.scrollLeft += e.deltaY * WHEEL_SENSITIVITY
   }
-
-  useEffect(() => {
-    props.onInit({
-      createTab,
-      setTabs
-    })
-  }, [])
-
-  useEffect(() => {
-    props.onChange(tabs)
-  }, [tabs])
-
-  useEffect(() => {
-    props.onActiveChange(activeTab)
-  }, [activeTab])
 
   return (
     <nav
@@ -137,12 +122,12 @@ export default function Tabs (props) {
       onDrop={handleDrop}
       onWheel={handleWheel}
     >
-      {tabs.map((tab) => (
+      {props.list.map((tab) => (
         <div
           key={tab.id}
           className={classNames({
             'Tabs-tab': true,
-            isActive: activeTab && activeTab.id === tab.id
+            isActive: props.active && props.active.id === tab.id
           })}
           draggable
           onMouseDown={(e) => handleMousedown(e, tab)}

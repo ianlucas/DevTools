@@ -1,11 +1,13 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 
 import Split from './Split'
 import ServiceLogAppHeader from './ServiceLogAppHeader'
 import ServiceLogAppResult from './ServiceLogAppResult'
 
-import source from './custom/ServiceLogApp'
+import Autosaver from './lib/Autosaver'
+import Filesystem from './lib/Filesystem'
 import ServiceAnalysis from './lib/ServiceAnalysis'
+import source from './custom/ServiceLogApp'
 
 import './styles/ServiceLogApp.css'
 
@@ -51,6 +53,45 @@ export default function ServiceLogApp (props) {
     setIsLoading(false)
   }
 
+  useEffect(() => {
+    async function read () {
+      try {
+        console.log('>>starting reading')
+        console.log(props.tab.id)
+        const data = await Filesystem.readFile(props.tab.id, 'data')
+        const meta = await Filesystem.readFile(props.tab.id, 'meta')
+        console.log(data)
+        console.log(meta)
+        props.onChangeTitle(meta.tab.title)
+        setResult(data.result)
+      } catch (e) {
+        console.log(e)
+        console.log('not found id: ', props.tab)
+      }
+      console.log('>>ending reading')
+    }
+
+    read()
+  }, [])
+
+  useEffect(() => {
+    async function autosave () {
+      if (result.rows.length) {
+        await Autosaver.syncFile({
+          meta: {
+            tab: props.tab,
+            last_update: +new Date()
+          },
+          data: {
+            result
+          }
+        })
+      }
+    }
+
+    autosave()
+  }, [props.tab, result])
+
   return (
     <Split
       className='service-log-app split'
@@ -63,7 +104,7 @@ export default function ServiceLogApp (props) {
       <ServiceLogAppHeader
         onUpdateResult={handleUpdateResult}
         onChangeTitle={props.onChangeTitle}
-        tabTitle={props.tabTitle}
+        tabTitle={props.tab.title}
         disabled={isDisabled}
       />
       <ServiceLogAppResult

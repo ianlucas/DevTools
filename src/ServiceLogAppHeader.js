@@ -4,6 +4,7 @@ import useEventState from './hooks/useEventState'
 import { Button, ControlGroup, Classes, Dialog, Icon, InputGroup, Navbar, NavbarGroup } from '@blueprintjs/core'
 import CodeMirrorEditor from './CodeMirrorEditor'
 
+import handleEnter from './handlers/handleEnter'
 import locale from './locale'
 import source from './custom/ServiceLogApp'
 
@@ -87,6 +88,7 @@ export default function ServiceLogAppHeader (props) {
           <InputGroup
             defaultValue={tabTitle}
             onChange={setTabTitleEvent}
+            onKeyDown={handleEnter(handleApplyTitleDialog)}
             autoFocus
           />
         </div>

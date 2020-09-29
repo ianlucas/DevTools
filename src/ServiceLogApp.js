@@ -65,7 +65,6 @@ export default function ServiceLogApp (props) {
         setPage(data.page)
         setPage(data.current)
       }
-      console.log('>>ending reading')
     }
 
     read()

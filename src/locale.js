@@ -2,6 +2,7 @@ import customLocale from './custom/locale'
 
 const locale = {
   termNewTab: 'New Tab',
+  termOpenedTab: 'Opened Tab',
   termChangeTitle: 'Change tab title',
   termServiceLogApp: 'Service Log App',
   termFetching: 'Fetching...',

@@ -6,16 +6,18 @@ import Files from './lib/Files'
 import Fuse from 'fuse.js'
 import Mousetrap from 'mousetrap'
 import dayjs from 'dayjs'
+import locale from './locale'
 import orderBy from 'lodash.orderby'
 import uniqBy from 'lodash.uniqby'
 
 import './styles/QuickOpenTab.css'
 
+const { termOpenedTab } = locale
+
 export default function QuickOpenTab (props) {
   const [isOpen, setIsOpen] = useState(false)
   const [results, setResults] = useState([])
   const [cursor, setCursor] = useState(0)
-  const [pattern, setPattern] = useState('')
 
   function tryClickItem (result) {
     if (!result) {
@@ -25,17 +27,21 @@ export default function QuickOpenTab (props) {
   }
 
   function handleChange (e) {
-    setPattern(e.target.value)
-    if (!pattern.length) {
+    const value = e.target.value
+
+    if (!value.length) {
       return
     }
     const tabList = uniqBy(
-      props.tabs.list.concat(
+      props.tabs.list.map((tab) => ({
+        ...tab,
+        subtitle: termOpenedTab
+      })).concat(
         Files.getCache().map((file) => ({
           id: file.id,
           title: file.title,
-          lastUpdateText: dayjs(file.last_update).fromNow(),
-          lastUpdate: file.last_update
+          subtitle: dayjs(file.last_update).fromNow(),
+          sort: file.last_update
         }))
       ),
       'id'
@@ -45,7 +51,7 @@ export default function QuickOpenTab (props) {
       keys: ['title']
     })
 
-    setResults(orderBy(fuse.search(pattern), ['lastUpdate'], 'desc'))
+    setResults(orderBy(fuse.search(value), ['sort'], 'desc'))
     setCursor(0)
   }
 
@@ -104,7 +110,7 @@ export default function QuickOpenTab (props) {
                     text={(
                       <>
                         <div>{result.item.title}</div>
-                        <small className='bp3-text-muted'>{result.item.lastUpdateText}</small>
+                        <small className='bp3-text-muted'>{result.item.subtitle}</small>
                       </>
                     )}
                   />

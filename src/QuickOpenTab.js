@@ -17,6 +17,13 @@ export default function QuickOpenTab (props) {
   const [cursor, setCursor] = useState(0)
   const [pattern, setPattern] = useState('')
 
+  function tryClickItem (result) {
+    if (!result) {
+      return
+    }
+    props.onClick(result.item)
+  }
+
   function handleChange (e) {
     setPattern(e.target.value)
     if (!pattern.length) {
@@ -50,13 +57,13 @@ export default function QuickOpenTab (props) {
       setCursor((current) => Math.max(current - 1, 0))
       e.preventDefault()
     } else if (e.key === 'Enter') {
-      props.onClick(results[cursor].item)
+      tryClickItem(results[cursor])
       handleClose()
     }
   }
 
   function handleItemClick (index) {
-    props.onClick(results[index].item)
+    tryClickItem(results[index])
     handleClose()
   }
 

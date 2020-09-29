@@ -1,23 +1,62 @@
 const app = window.require('electron').remote
 const fs = app.require('fs-extra')
-const appData = window.require('app-data-folder')
-const path = window.require('path')
-const printf = window.require('printf')
+const getAppFolder = app.require('app-data-folder')
+const path = app.require('path')
+const printf = app.require('printf')
+
+function appPath () {
+  return getAppFolder('DevToolsApp')
+}
+
+function resolve (id, type) {
+  return path.resolve(appPath(), printf('%s.%s.json', id, type))
+}
+
+async function write (id, content) {
+  try {
+    await Promise.all(
+      fs.writeFile(resolve(id, 'tab'), JSON.stringify(content.tab)),
+      fs.writeFile(resolve(id, 'data'), JSON.stringify(content.data))
+    )
+    return true
+  } catch (e) {
+    console.log('[write] error when writing for id ', id)
+    return false
+  }
+}
+
+async function read (id, type) {
+  try {
+    return app.require(resolve(id, type))
+  } catch (e) {
+    return null
+  }
+}
+
+async function scanType (type) {
+  try {
+    return (await fs.readdir(appPath())).filter((file) => (
+      file.indexOf(`.${type}.`)
+    ))
+  } catch (e) {
+    return []
+  }
+}
+
+async function scanAndLoad (type) {
+  try {
+    return (await scanType(type)).map((file) => (
+      app.require(path.resolve(appPath(), file))
+    ))
+  } catch (e) {
+    return []
+  }
+}
 
 module.exports = {
-  async persistFile (id, content) {
-    const metaFile = path.resolve(appData('DevToolsApp'), printf('%s.meta.json', id))
-    const dataFile = path.resolve(appData('DevToolsApp'), printf('%s.data.json', id))
-    console.log('saving...', id)
-    await fs.writeFile(metaFile, JSON.stringify(content.meta), () => console.log('done meta'))
-    await fs.writeFile(dataFile, JSON.stringify(content.data), () => console.log('done data'))
-  },
-
-  async readFile (id, type) {
-    try {
-      return window.require(path.resolve(appData('DevToolsApp'), printf('%s.%s.json', id, type)))
-    } catch (e) {
-      return null
-    }
-  }
+  resolve,
+  write,
+  read,
+  scanType,
+  scanAndLoad
 }

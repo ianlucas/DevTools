@@ -4,7 +4,7 @@ import Split from './Split'
 import ServiceLogAppHeader from './ServiceLogAppHeader'
 import ServiceLogAppResult from './ServiceLogAppResult'
 
-import Autosaver from './lib/Autosaver'
+import Files from './lib/Files'
 import Filesystem from './lib/Filesystem'
 import ServiceAnalysis from './lib/ServiceAnalysis'
 import source from './custom/ServiceLogApp'
@@ -55,18 +55,15 @@ export default function ServiceLogApp (props) {
 
   useEffect(() => {
     async function read () {
-      try {
-        console.log('>>starting reading')
-        console.log(props.tab.id)
-        const data = await Filesystem.readFile(props.tab.id, 'data')
-        const meta = await Filesystem.readFile(props.tab.id, 'meta')
-        console.log(data)
-        console.log(meta)
-        props.onChangeTitle(meta.tab.title)
+      const data = await Filesystem.read(props.tab.id, 'data')
+      const tab = await Filesystem.read(props.tab.id, 'tab')
+      if (tab) {
+        props.onChangeTitle(tab.title)
+      }
+      if (data) {
         setResult(data.result)
-      } catch (e) {
-        console.log(e)
-        console.log('not found id: ', props.tab)
+        setPage(data.page)
+        setPage(data.current)
       }
       console.log('>>ending reading')
     }
@@ -75,21 +72,23 @@ export default function ServiceLogApp (props) {
   }, [])
 
   useEffect(() => {
-    async function autosave () {
-      if (result.rows.length) {
-        await Autosaver.syncFile({
-          meta: {
-            tab: props.tab,
+    // only applications with rows will autosave.
+    if (result.rows.length) {
+      Files.queue(
+        props.tab.id,
+        {
+          tab: {
+            ...props.tab,
             last_update: +new Date()
           },
           data: {
-            result
+            result,
+            page,
+            current
           }
-        })
-      }
+        }
+      )
     }
-
-    autosave()
   }, [props.tab, result])
 
   return (

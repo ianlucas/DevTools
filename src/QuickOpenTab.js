@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 
 import { InputGroup, Menu, MenuItem, Overlay } from '@blueprintjs/core'
 
-import Autosaver from './lib/Autosaver'
+import Files from './lib/Files'
 import Fuse from 'fuse.js'
 import Mousetrap from 'mousetrap'
 import dayjs from 'dayjs'
@@ -16,31 +16,17 @@ export default function QuickOpenTab (props) {
   const [results, setResults] = useState([])
   const [cursor, setCursor] = useState(0)
   const [pattern, setPattern] = useState('')
-  const [tabResults, setTabResults] = useState([])
-  const [displayedResults, setDisplayedResults] = useState([])
 
-  function refreshTabResults (list, active) {
-    const join = (
-      active
-        ? [active]
-        : []
-    )
-    setTabResults(join.concat(list.filter((other) => {
-      return other.id !== active.id
-    })).map((item) => ({
-      item
-    })))
-  }
-
-  function refreshResults (pattern) {
+  function handleChange (e) {
+    setPattern(e.target.value)
     if (!pattern.length) {
       return
     }
     const tabList = uniqBy(
-      tabResults.map((result) => result.item).concat(
-        Autosaver.getCache().map((file) => ({
-          id: file.tab.id,
-          title: file.tab.title,
+      props.tabs.list.concat(
+        Files.getCache().map((file) => ({
+          id: file.id,
+          title: file.title,
           lastUpdateText: dayjs(file.last_update).fromNow(),
           lastUpdate: file.last_update
         }))
@@ -51,30 +37,26 @@ export default function QuickOpenTab (props) {
     const fuse = new Fuse(tabList, {
       keys: ['title']
     })
+
     setResults(orderBy(fuse.search(pattern), ['lastUpdate'], 'desc'))
     setCursor(0)
   }
 
-  function handleChange (e) {
-    setPattern(e.target.value)
-    refreshResults(e.target.value)
-  }
-
   function handleKeydown (e) {
     if (e.key === 'ArrowDown') {
-      setCursor((current) => Math.min(current + 1, displayedResults.length - 1))
+      setCursor((current) => Math.min(current + 1, results.length - 1))
       e.preventDefault()
     } else if (e.key === 'ArrowUp') {
       setCursor((current) => Math.max(current - 1, 0))
       e.preventDefault()
     } else if (e.key === 'Enter') {
-      props.onClick(displayedResults[cursor].item)
+      props.onClick(results[cursor].item)
       handleClose()
     }
   }
 
   function handleItemClick (index) {
-    props.onClick(displayedResults[index].item)
+    props.onClick(results[index].item)
     handleClose()
   }
 
@@ -87,18 +69,6 @@ export default function QuickOpenTab (props) {
       setIsOpen((current) => !current)
     })
   }, [])
-
-  useEffect(() => {
-    refreshTabResults(props.tabs.list, props.tabs.active)
-  }, [props.tabs])
-
-  useEffect(() => {
-    setDisplayedResults(
-      pattern.length
-        ? results
-        : tabResults
-    )
-  }, [pattern])
 
   return (
     <Overlay
@@ -117,9 +87,9 @@ export default function QuickOpenTab (props) {
               onKeyDown={handleKeydown}
               autoFocus
             />
-            {displayedResults.length > 0 && (
+            {results.length > 0 && (
               <Menu>
-                {displayedResults.map((result, index) => (
+                {results.map((result, index) => (
                   <MenuItem
                     onClick={handleItemClick.bind(null, index)}
                     key={result.item.id}

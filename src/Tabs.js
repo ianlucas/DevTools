@@ -6,27 +6,11 @@ import './styles/Tabs.css'
 
 const WHEEL_SENSITIVITY = 0.5
 
-// onChange
-// onDoubleClick
-// onClick
 export default function Tabs (props) {
   const refTabs = useRef(null)
   const [hoverTab, setHoverTab] = useState(null)
   const [draggedTab, setDraggedTab] = useState(null)
   const [isDragging, setIsDragging] = useState(false)
-
-  // function createTab (title, shouldBeActive = true) {
-  //   const id = uuid()
-  //   const tab = {
-  //     id,
-  //     title: title || termNewTab
-  //   }
-  //   setTabs((current) => [...current, tab])
-  //   if (shouldBeActive) {
-  //     setActiveTab(tab)
-  //   }
-  //   return id
-  // }
 
   function handleDoubleClick (e) {
     if (

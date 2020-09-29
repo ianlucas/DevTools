@@ -92,7 +92,7 @@ export default function App () {
               display: (tab.id === tabs.active.id ? 'block' : 'none')
             }}
             key={tab.id}
-            onChangeTitle={handleTabTitleChange}
+            onTitleChange={handleTabTitleChange}
             tab={tab}
           />
         ))}

@@ -15,7 +15,8 @@ export default function ServiceLogApp (props) {
   const [isDisabled, setIsDisabled] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const [page, setPage] = useState(0)
-  const [current, setCurrent] = useState(null)
+  const [headerData, setHeaderData] = useState(null)
+  const [loadedHeaderData, setLoadedHeaderData] = useState(null)
   const [result, setResult] = useState({
     type: 'log',
     canFetchMore: false,
@@ -23,7 +24,7 @@ export default function ServiceLogApp (props) {
   })
 
   function fetch (newCurrent) {
-    const context = newCurrent || current
+    const context = newCurrent || headerData
     return source.fetch(
       context.environment,
       source.beforeFetch(context.queryText, page),
@@ -31,12 +32,12 @@ export default function ServiceLogApp (props) {
     )
   }
 
-  async function handleUpdateResult (environment, queryText) {
-    const newCurrent = { environment, queryText }
+  async function handleResultChange (environment, queryText) {
+    const currentHeaderData = { environment, queryText }
     setIsDisabled(true)
     setPage(0)
-    setCurrent(newCurrent)
-    setResult(await fetch(newCurrent))
+    setHeaderData(currentHeaderData)
+    setResult(await fetch(currentHeaderData))
     setIsDisabled(false)
   }
 
@@ -53,6 +54,9 @@ export default function ServiceLogApp (props) {
     setIsLoading(false)
   }
 
+  // ** Reading **
+  // Initially, we check if this id has a tab and data files
+  // generated for them. We load what we could find.
   useEffect(() => {
     async function read () {
       const data = await Filesystem.read(props.tab.id, 'data')
@@ -63,15 +67,17 @@ export default function ServiceLogApp (props) {
       if (data) {
         setResult(data.result)
         setPage(data.page)
-        setPage(data.current)
+        setLoadedHeaderData(data.headerData)
       }
     }
 
     read()
   }, [])
 
+  // ** Autosaving **
+  // Everytime the tab info changes or result, we queue a autosave
+  // this will generate tab and data json files in app path.
   useEffect(() => {
-    // only applications with rows will autosave.
     if (result.rows.length) {
       Files.queue(
         props.tab.id,
@@ -83,7 +89,7 @@ export default function ServiceLogApp (props) {
           data: {
             result,
             page,
-            current
+            headerData
           }
         }
       )
@@ -100,10 +106,11 @@ export default function ServiceLogApp (props) {
       gutterSize={1}
     >
       <ServiceLogAppHeader
-        onUpdateResult={handleUpdateResult}
-        onChangeTitle={props.onChangeTitle}
+        onResultChange={handleResultChange}
+        onTitleChange={props.onTitleChange}
         tabTitle={props.tab.title}
         disabled={isDisabled}
+        initialHeaderData={loadedHeaderData}
       />
       <ServiceLogAppResult
         {...result}

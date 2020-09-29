@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import useEventState from './hooks/useEventState'
 
 import { Button, ControlGroup, Classes, Dialog, Icon, InputGroup, Navbar, NavbarGroup } from '@blueprintjs/core'
@@ -19,10 +19,10 @@ export default function ServiceLogAppHeader (props) {
   const [environment, setEnvironment] = useState('')
 
   async function handleRunClick () {
-    props.onUpdateResult(environment, queryText)
+    props.onResultChange(environment, queryText)
   }
 
-  function handleChangeTitleDialog () {
+  function handleTitleChangeDialog () {
     setTabTitle(props.tabTitle)
     setShowTabTitleDialog(true)
   }
@@ -32,9 +32,17 @@ export default function ServiceLogAppHeader (props) {
   }
 
   function handleApplyTitleDialog () {
-    props.onChangeTitle(tabTitle)
+    props.onTitleChange(tabTitle)
     handleCloseTitleDialog()
   }
+
+  useEffect(() => {
+    if (!props.initialHeaderData) {
+      return
+    }
+    setQueryText(props.initialHeaderData.queryText)
+    setEnvironment(props.initialHeaderData.environment)
+  }, [props.initialHeaderData])
 
   return (
     <>
@@ -46,7 +54,7 @@ export default function ServiceLogAppHeader (props) {
             <ControlGroup>
               <Button
                 icon='label'
-                onClick={handleChangeTitleDialog}
+                onClick={handleTitleChangeDialog}
               >
                 {termChangeTitle}
               </Button>

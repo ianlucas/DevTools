@@ -14,13 +14,12 @@ function resolve (id, type) {
 
 async function write (id, content) {
   try {
-    await Promise.all(
+    await Promise.all([
       fs.writeFile(resolve(id, 'tab'), JSON.stringify(content.tab)),
       fs.writeFile(resolve(id, 'data'), JSON.stringify(content.data))
-    )
+    ])
     return true
   } catch (e) {
-    console.log('[write] error when writing for id ', id)
     return false
   }
 }

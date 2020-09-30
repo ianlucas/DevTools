@@ -9,9 +9,13 @@ import locale from './locale'
 
 import './styles/App.css'
 
-const { termNewTab } = locale
+const { termNewTab, termFile, termDebug, termServiceLogApp, termToggleDevTools } = locale
+const { remote } = window.require('electron')
+const { Menu } = remote
 
 export default function App () {
+  // ** Tab handling **
+
   const [tabs, setTabs] = useState({
     list: [],
     active: null
@@ -75,6 +79,35 @@ export default function App () {
       handleTabCreate('...', true, target.id)
     }
   }
+
+  // ** Menu handling **
+
+  Menu.setApplicationMenu(
+    Menu.buildFromTemplate([
+      {
+        label: termFile,
+        submenu: [
+          {
+            label: termServiceLogApp,
+            click () {
+              handleTabCreate()
+            }
+          }
+        ]
+      },
+      {
+        label: termDebug,
+        submenu: [
+          {
+            label: termToggleDevTools,
+            click () {
+              remote.getCurrentWindow().webContents.openDevTools()
+            }
+          }
+        ]
+      }
+    ])
+  )
 
   return (
     <div>

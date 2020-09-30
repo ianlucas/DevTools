@@ -1,6 +1,9 @@
 import customLocale from './custom/locale'
 
 const locale = {
+  termFile: 'File',
+  termDebug: 'Debug',
+  termToggleDevTools: 'Toogle Developer Tools',
   termNewTab: 'New Tab',
   termOpenedTab: 'Opened Tab',
   termChangeTitle: 'Change tab title',

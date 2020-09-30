@@ -29,6 +29,12 @@ export default function CodeMirrorEditor (props) {
     setEditor(editor)
   }, [])
 
+  useEffect(() => {
+    if (props.initialValue) {
+      editor.setValue(props.initialValue)
+    }
+  }, [props.initialValue])
+
   if (editor) {
     editor.setOption('readOnly', props.disabled || false)
   }

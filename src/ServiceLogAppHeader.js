@@ -40,7 +40,6 @@ export default function ServiceLogAppHeader (props) {
     if (!props.initialHeaderData) {
       return
     }
-    setQueryText(props.initialHeaderData.queryText)
     setEnvironment(props.initialHeaderData.environment)
   }, [props.initialHeaderData])
 
@@ -71,19 +70,19 @@ export default function ServiceLogAppHeader (props) {
                 </select>
               </div>
               <Button
-                disabled={props.disabled}
+                disabled={props.disabled || queryText.length === 0}
                 icon={<Icon icon='play' intent='success' />}
                 onClick={handleRunClick}
               >
                 {props.disabled ? termFetching : termRun}
               </Button>
             </ControlGroup>
-
           </NavbarGroup>
         </Navbar>
         <CodeMirrorEditor
           disabled={props.disabled}
           onChange={setQueryText}
+          initialValue={props.initialHeaderData?.queryText}
         />
       </div>
       <Dialog

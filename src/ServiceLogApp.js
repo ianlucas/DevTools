@@ -62,7 +62,7 @@ export default function ServiceLogApp (props) {
       const data = await Filesystem.read(props.tab.id, 'data')
       const tab = await Filesystem.read(props.tab.id, 'tab')
       if (tab) {
-        props.onChangeTitle(tab.title)
+        props.onTitleChange(tab.title)
       }
       if (data) {
         setResult(data.result)
@@ -94,7 +94,7 @@ export default function ServiceLogApp (props) {
         }
       )
     }
-  }, [props.tab, result])
+  }, [props.tab, result, headerData])
 
   return (
     <Split

@@ -9,6 +9,7 @@ async function initializeCache () {
       cache.push(tab)
     ))
   })
+  console.log(cache)
 }
 
 function getCache () {
@@ -22,12 +23,16 @@ async function persist (id, contents, inQueue) {
   ))
   if (cached) {
     cache = cache.map((other) => {
-      if (other.tab.id !== id) {
+      try {
+        if (other.id !== id) {
+          return other
+        }
+        return {
+          ...other,
+          ...contents.tab
+        }
+      } catch (e) {
         return other
-      }
-      return {
-        ...other,
-        ...contents.tab
       }
     })
   } else {

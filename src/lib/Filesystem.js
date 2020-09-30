@@ -35,7 +35,7 @@ async function read (id, type) {
 async function scanType (type) {
   try {
     return (await fs.readdir(appPath())).filter((file) => (
-      file.indexOf(`.${type}.`)
+      file.indexOf(`.${type}.`) > -1
     ))
   } catch (e) {
     return []

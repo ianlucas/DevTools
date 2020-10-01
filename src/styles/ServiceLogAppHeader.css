@@ -1,8 +1,13 @@
 .service-log-app-header {
+  background-color: #fff;
   overflow: auto;
 }
 
 .service-log-app-header .CodeMirror {
   height: calc(100% - 50px);
   padding: 1em;
+}
+
+.service-log-app-header-autosave {
+  margin-left: 1em;
 }

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import useEventState from './hooks/useEventState'
 
-import { Button, ControlGroup, Classes, Dialog, Icon, InputGroup, Navbar, NavbarGroup } from '@blueprintjs/core'
+import { Button, Toast, Switch, ControlGroup, Classes, Dialog, Icon, InputGroup, Navbar, NavbarGroup, Toaster } from '@blueprintjs/core'
 import CodeMirrorEditor from './CodeMirrorEditor'
 
 import handleEnter from './handlers/handleEnter'
@@ -10,13 +10,14 @@ import source from './custom/ServiceLogApp'
 
 import './styles/ServiceLogAppHeader.css'
 
-const { termServiceLogApp, termRun, termFetching, termChangeTitle, termCancel, termOk } = locale
+const { termServiceLogApp, termRun, termFetching, termChangeTitle, termCancel, termOk, termSave, termAutosave } = locale
 
 export default function ServiceLogAppHeader (props) {
   const [showTabTitleDialog, setShowTabTitleDialog] = useState(false)
   const [tabTitle, setTabTitleEvent, setTabTitle] = useEventState('')
   const [queryText, setQueryText] = useState('')
   const [environment, handleEnvironmentChange, setEnvironment] = useEventState('')
+  const [toasts, setToasts] = useState([])
 
   async function handleRunClick () {
     props.onResultChange(environment, queryText)
@@ -36,12 +37,24 @@ export default function ServiceLogAppHeader (props) {
     handleCloseTitleDialog()
   }
 
+  function handleDismiss (toast) {
+    setToasts((current) => current.filter((other) => (
+      other.id !== toast.id
+    )))
+  }
+
   useEffect(() => {
     if (!props.initialHeaderData) {
       return
     }
     setEnvironment(props.initialHeaderData.environment)
   }, [props.initialHeaderData])
+
+  useEffect(() => {
+    if (props.error) {
+      setToasts((current) => current.concat(props.error))
+    }
+  }, [props.error])
 
   return (
     <>
@@ -56,6 +69,12 @@ export default function ServiceLogAppHeader (props) {
                 onClick={handleTitleChangeDialog}
               >
                 {termChangeTitle}
+              </Button>
+              <Button
+                icon='floppy-disk'
+                onClick={props.onSaveClick}
+              >
+                {termSave}
               </Button>
               <div className='bp3-select'>
                 <select
@@ -80,6 +99,12 @@ export default function ServiceLogAppHeader (props) {
                 {props.disabled ? termFetching : termRun}
               </Button>
             </ControlGroup>
+            <Switch
+              className='service-log-app-header-autosave'
+              defaultChecked={props.autosave}
+              label={termAutosave}
+              onChange={(e) => props.onAutosaveChange(e.target.checked)}
+            />
           </NavbarGroup>
         </Navbar>
         <CodeMirrorEditor
@@ -118,6 +143,17 @@ export default function ServiceLogAppHeader (props) {
           </div>
         </div>
       </Dialog>
+      <Toaster>
+        {toasts.map((toast) => (
+          <Toast
+            key={toast.id}
+            intent='danger'
+            icon='error'
+            message={toast.message}
+            onDismiss={handleDismiss.bind(null, toast)}
+          />
+        ))}
+      </Toaster>
     </>
   )
 }

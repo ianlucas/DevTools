@@ -4,6 +4,7 @@ import Split from './Split'
 import ServiceLogAppHeader from './ServiceLogAppHeader'
 import ServiceLogAppResult from './ServiceLogAppResult'
 
+import { v4 as uuid } from 'uuid'
 import Files from './lib/Files'
 import Filesystem from './lib/Filesystem'
 import ServiceAnalysis from './lib/ServiceAnalysis'
@@ -18,6 +19,8 @@ export default function ServiceLogApp (props) {
   const [page, setPage] = useState(0)
   const [headerData, setHeaderData] = useState(null)
   const [loadedHeaderData, setLoadedHeaderData] = useState(null)
+  const [error, setError] = useState('')
+  const [autosave, setAutosave] = useState(true)
   const [result, setResult] = useState({
     type: 'log',
     canFetchMore: false,
@@ -38,21 +41,61 @@ export default function ServiceLogApp (props) {
     setIsDisabled(true)
     setPage(0)
     setHeaderData(currentHeaderData)
-    setResult(await fetch(currentHeaderData))
+    const newResult = await fetch(currentHeaderData)
+    if (newResult.type === 'error') {
+      setError({
+        message: newResult.message,
+        id: uuid()
+      })
+    } else {
+      setResult(newResult)
+      setError('')
+    }
     setIsDisabled(false)
   }
 
   async function handleClickFetchMore () {
     setIsDisabled(true)
     setIsLoading(true)
-    setPage(page + 1)
+    setPage((current) => current + 1)
     const newResult = await fetch()
-    setResult({
-      ...newResult,
-      rows: result.rows.concat(newResult.rows)
-    })
+    if (newResult.type === 'error') {
+      setError({
+        message: newResult.message,
+        id: uuid()
+      })
+      setPage((current) => current - 1)
+    } else {
+      setResult({
+        ...newResult,
+        rows: result.rows.concat(newResult.rows)
+      })
+      setError('')
+    }
     setIsDisabled(false)
     setIsLoading(false)
+  }
+
+  function handleAutosaveChange (value) {
+    setAutosave(value)
+  }
+
+  function handleSave () {
+    Files.queue(
+      props.tab.id,
+      {
+        tab: {
+          ...props.tab,
+          last_update: +new Date(),
+          saved: true
+        },
+        data: {
+          result,
+          page,
+          headerData
+        }
+      }
+    )
   }
 
   // ** Reading **
@@ -85,24 +128,14 @@ export default function ServiceLogApp (props) {
   // Everytime the tab info changes or result, we queue a autosave
   // this will generate tab and data json files in app path.
   useEffect(() => {
-    if (result.rows.length && headerData) {
-      Files.queue(
-        props.tab.id,
-        {
-          tab: {
-            ...props.tab,
-            last_update: +new Date(),
-            saved: true
-          },
-          data: {
-            result,
-            page,
-            headerData
-          }
-        }
-      )
+    if (
+      result.rows.length &&
+        headerData &&
+        autosave
+    ) {
+      handleSave()
     }
-  }, [props.tab, result, headerData])
+  }, [props.tab, result, headerData, autosave])
 
   if (!loaded) {
     return null
@@ -120,9 +153,13 @@ export default function ServiceLogApp (props) {
       <ServiceLogAppHeader
         onResultChange={handleResultChange}
         onTitleChange={props.onTitleChange}
+        onAutosaveChange={handleAutosaveChange}
+        onSaveClick={handleSave}
+        autosave={autosave}
         tabTitle={props.tab.title}
         disabled={isDisabled}
         initialHeaderData={loadedHeaderData}
+        error={error}
       />
       <ServiceLogAppResult
         {...result}

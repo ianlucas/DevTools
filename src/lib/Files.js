@@ -9,7 +9,6 @@ async function initializeCache () {
       cache.push(tab)
     ))
   })
-  console.log(cache)
 }
 
 function getCache () {

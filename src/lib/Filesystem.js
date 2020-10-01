@@ -26,7 +26,9 @@ async function write (id, content) {
 
 async function read (id, type) {
   try {
-    return app.require(resolve(id, type))
+    return JSON.parse(await fs.readFile(resolve(id, type), {
+      encoding: 'utf8'
+    }))
   } catch (e) {
     return null
   }

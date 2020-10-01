@@ -39,7 +39,8 @@ export default function App () {
     const id = initialId || uuid()
     const tab = {
       id,
-      title: title || termNewTab
+      title: title || termNewTab,
+      saved: !!initialId
     }
     setTabs((current) => ({
       active: (

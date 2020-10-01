@@ -16,7 +16,7 @@ export default function ServiceLogAppHeader (props) {
   const [showTabTitleDialog, setShowTabTitleDialog] = useState(false)
   const [tabTitle, setTabTitleEvent, setTabTitle] = useEventState('')
   const [queryText, setQueryText] = useState('')
-  const [environment, setEnvironment] = useState('')
+  const [environment, handleEnvironmentChange, setEnvironment] = useEventState('')
 
   async function handleRunClick () {
     props.onResultChange(environment, queryText)
@@ -58,13 +58,16 @@ export default function ServiceLogAppHeader (props) {
                 {termChangeTitle}
               </Button>
               <div className='bp3-select'>
-                <select onChange={setEnvironment}>
-                  {source.environments.map((environment) => (
+                <select
+                  onChange={handleEnvironmentChange}
+                  value={environment}
+                >
+                  {source.environments.map((option) => (
                     <option
-                      key={environment.id}
-                      value={environment.id}
+                      key={option.id}
+                      value={option.id}
                     >
-                      {environment.name}
+                      {option.name}
                     </option>
                   ))}
                 </select>

@@ -25,12 +25,13 @@ export default function CodeMirrorEditor (props) {
 
     editor.on('cursorActivity', handleChange)
     editor.on('change', handleChange)
+    editor.setValue(props.initialValue || '')
 
     setEditor(editor)
   }, [])
 
   useEffect(() => {
-    if (props.initialValue) {
+    if (editor && props.initialValue) {
       editor.setValue(props.initialValue)
     }
   }, [props.initialValue])

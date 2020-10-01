@@ -12,6 +12,7 @@ import source from './custom/ServiceLogApp'
 import './styles/ServiceLogApp.css'
 
 export default function ServiceLogApp (props) {
+  const [loaded, setLoaded] = useState(false)
   const [isDisabled, setIsDisabled] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const [page, setPage] = useState(0)
@@ -68,23 +69,30 @@ export default function ServiceLogApp (props) {
         setResult(data.result)
         setPage(data.page)
         setLoadedHeaderData(data.headerData)
+        setHeaderData(data.headerData)
       }
+      setLoaded(true)
     }
 
-    read()
+    if (props.tab.saved) {
+      read()
+    } else {
+      setLoaded(true)
+    }
   }, [])
 
   // ** Autosaving **
   // Everytime the tab info changes or result, we queue a autosave
   // this will generate tab and data json files in app path.
   useEffect(() => {
-    if (result.rows.length) {
+    if (result.rows.length && headerData) {
       Files.queue(
         props.tab.id,
         {
           tab: {
             ...props.tab,
-            last_update: +new Date()
+            last_update: +new Date(),
+            saved: true
           },
           data: {
             result,
@@ -95,6 +103,10 @@ export default function ServiceLogApp (props) {
       )
     }
   }, [props.tab, result, headerData])
+
+  if (!loaded) {
+    return null
+  }
 
   return (
     <Split

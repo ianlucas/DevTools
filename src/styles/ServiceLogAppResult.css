@@ -1,5 +1,5 @@
 .service-log-app-result {
-  background: transparent;
+  background: #95a7b3;
   overflow: auto;
 }
 
@@ -11,4 +11,10 @@
   margin-top: 0.25em;
   margin-bottom: 1em;
   text-align: center;
+}
+
+body:not(.native-scrollbars) .service-log-app-result::-webkit-scrollbar-thumb:hover,
+body:not(.native-scrollbars) .service-log-app-result::-webkit-scrollbar-thumb:active {
+  background-color: #e0e0e0;
+  border-width: 4px
 }

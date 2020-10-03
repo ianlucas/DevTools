@@ -13,6 +13,12 @@ A framework to quickly set up a development tools environment.
 3. Create a file named `locale.js` exporting a simple object - it must be created and it can overwrite the values of `./src/locale.js` file;
 4. Configure the apps that will be used.
 
+### Building
+
+1. ```bash npm run build``` (for Parcel build);
+2. ```bash npm run pack``` (for Electron Builder packaging);
+3. This will create a portable executable of the application at `./bin`.
+
 ### Service Log App
 
 * To setup this app, you need to create a file at `./src/custom/ServiceLogApp.js` exporting an object with two functions and a property.
@@ -24,7 +30,7 @@ A framework to quickly set up a development tools environment.
   * `fetch` function should return an object with the results of the query, it has three parameteres:
     * `enviroment` (String) - the id of the enviroment chosen in the screen;
     * `query` (Any) - the query processed at `beforeFetch`;
-    * `analysis` (Object) - an object that use the files on `./custom/ServiceAnalysis` to analyse the given service name, request and response. It has a function `analyse` that takes three parameteres: `name`, `request` and `response` (expects String);
+    * `analysis` (Object) - an object that use the files on `./src/custom/ServiceAnalysis` to analyse the given service name, request and response. It has a function `analyse` that takes three parameteres: `name`, `request` and `response` (expects String);
     * should return an object with three properties:
       * `type` (String) - the type of display of the results. It can be `log` or `table`;
       * `canFetchMore` (Boolean) - tells the app if it can fetch more results;

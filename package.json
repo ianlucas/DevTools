@@ -1,22 +1,27 @@
 {
   "name": "devtools",
   "version": "1.0.0",
-  "description": "",
+  "description": "A framework to quickly set up a development tools environment.",
   "main": "bootstrap.js",
+  "bundle": "dist/index.html",
   "scripts": {
+    "build": "parcel build src/index.html --target bundle --public-url ./",
+    "clean": "rimraf dist node_modules yarn.lock .parcel-cache output",
     "dev": "parcel src/index.html --public-url ./",
-    "start": "electron .",
-    "clean": "rimraf dist node_modules yarn.lock .parcel-cache"
+    "postinstall": "electron-builder install-app-deps",
+    "pack": "electron-builder --dir --win=portable",
+    "start": "electron ."
   },
-  "author": "",
+  "author": "Ian Lucas <ianlucas_ferreira@hotmail.com>",
   "license": "ISC",
   "devDependencies": {
     "electron": "^8.5.0",
-    "electron-devtools-installer": "^3.1.1",
+    "electron-builder": "22.8.1",
     "parcel": "^2.0.0-beta.1",
     "rimraf": "^3.0.2"
   },
   "dependencies": {
+    "electron-devtools-installer": "^3.1.1",
     "@blueprintjs/core": "^3.31.0",
     "@blueprintjs/table": "^3.8.13",
     "app-data-folder": "^1.0.0",
@@ -41,7 +46,9 @@
     "uuid": "^8.3.0"
   },
   "targets": {
-    "main": {
+    "bundle": {
+      "context": "electron-main",
+      "includeNodeModules": ["react-syntax-highlighter"],
       "engines": {
         "node": ">=12.x",
         "electron": ">=8.x",
@@ -50,6 +57,21 @@
           "not dead"
         ]
       }
+    }
+  },
+  "build": {
+    "productName": "DevTools",
+    "appId": "com.devtools",
+    "win": {
+      "target": "nsis"
+    },
+    "nsis": {
+      "artifactName": "DevTools.exe"
+    },
+    "directories": {
+      "output": "./bin",
+      "app": ".",
+      "buildResources": "./build_resources"
     }
   }
 }

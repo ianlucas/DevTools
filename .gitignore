@@ -4,3 +4,4 @@ dist
 custom
 yarn-error.log
 output
+bin

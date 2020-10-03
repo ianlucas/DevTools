@@ -3,3 +3,4 @@ node_modules
 dist
 custom
 yarn-error.log
+output

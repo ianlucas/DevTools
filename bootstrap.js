@@ -16,7 +16,7 @@ function createWindow () {
 
   Menu.setApplicationMenu(null)
   window.loadFile(path.resolve(__dirname, 'dist/index.html'))
-  window.setIcon(path.resolve(__dirname, 'icons/win/icon.ico'))
+  window.setIcon(path.resolve(__dirname, 'icons/icon.ico'))
 }
 
 app.allowRendererProcessReuse = true
